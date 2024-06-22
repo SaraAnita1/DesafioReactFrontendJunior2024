@@ -1,9 +1,13 @@
 import React from "react";
+import TodoApp from "./components/todoApp";
 
-export default function App() {
+
+function App() {
   return (
-    <section>
-      <h1>Todos</h1>
-    </section>
+    <div className="App">
+      <TodoApp />
+    </div>
   );
 }
+
+export default App;
