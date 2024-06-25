@@ -1,5 +1,3 @@
-// src/components/TodoRemaining.js
-
 import React from 'react';
 
 const TodoRemaining = ({ remaining }) => {
