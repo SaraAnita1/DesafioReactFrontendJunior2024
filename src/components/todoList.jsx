@@ -1,34 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { TodoContext } from '../contexts/TodoContext';
+import TodoItem from './TodoItem';
 
-const TodoList = ({ todos, onToggleTodo, onDeleteTodo, onEditTodo, editingIndex, editingText, onEditingTextChange, onSaveTodo }) => {
+const TodoList = ({ filter }) => {
+  const { todos } = useContext(TodoContext);
+
+  const filteredTodos = todos.filter(todo => {
+    if (filter === 'active') return !todo.completed;
+    if (filter === 'completed') return todo.completed;
+    return true;
+  });
+
   return (
-    <ul>
-      {todos.map((todo, index) => (
-        <li key={index} onDoubleClick={() => onEditTodo(index, todo.text)}>
-          {editingIndex === index ? (
-            <input
-              type="text"
-              value={editingText}
-              onChange={(e) => onEditingTextChange(e.target.value)}
-              onBlur={() => onSaveTodo(index)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  onSaveTodo(index);
-                }
-              }}
-            />
-          ) : (
-            <>
-              <span
-                style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
-                onClick={() => onToggleTodo(index)}
-              >
-                {todo.text}
-              </span>
-              <button onClick={() => onDeleteTodo(index)}>Delete</button>
-            </>
-          )}
-        </li>
+    <ul className="todo-list">
+      {filteredTodos.map((todo, index) => (
+        <TodoItem key={index} index={index} todo={todo} />
       ))}
     </ul>
   );

@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { TodoContext } from '../contexts/TodoContext';
 
-const TodoActions = ({ onMarkAllCompleted, onShowAll, onShowCompleted, onShowNotCompleted, onClearAll }) => {
+const TodoActions = () => {
+  const { todos, clearCompleted } = useContext(TodoContext);
+
+  const handleMarkAllCompleted = () => {
+    todos.forEach((todo, index) => {
+      if (!todo.completed) {
+        toggleTodo(index);
+      }
+    });
+  };
+
   return (
-    <div className="todo-actions">
-      <button onClick={onMarkAllCompleted}>Mark All Completed</button>
-      <button onClick={onShowAll}>Show All</button>
-      <button onClick={onShowCompleted}>Show Completed</button>
-      <button onClick={onShowNotCompleted}>Show Not Completed</button>
-      <button onClick={onClearAll}>Clear All</button>
+    <div className="actions">
+      <button onClick={handleMarkAllCompleted}>Mark All as Completed</button>
+      <button onClick={clearCompleted}>Clear Completed</button>
     </div>
   );
 };
